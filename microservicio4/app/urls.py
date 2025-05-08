@@ -4,10 +4,10 @@ from rest_framework import permissions, routers
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
-from orquestador.views import TuVistaViewSet  # importa tus vistas reales
+from orquestador.views import TuVistaViewSet
 
 router = routers.DefaultRouter()
-router.register(r'tuvista', TuVistaViewSet)  # registra tus vistas reales
+router.register(r'tuvista', TuVistaViewSet)
 
 schema_view = get_schema_view(
    openapi.Info(
