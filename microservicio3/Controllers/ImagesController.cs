@@ -14,12 +14,15 @@ public class ImagesController : ControllerBase
 
     [HttpPost("upload")]
     [Consumes("multipart/form-data")]
-    public async Task<IActionResult> Upload([FromForm] IFormFile file, [FromForm] string consultaId)
+    public async Task<IActionResult> Upload([FromForm] UploadImageRequest request)
     {
-        if (file == null || file.Length == 0) return BadRequest("Invalid file.");
-        var id = await _service.SaveImageAsync(file, consultaId); // este método debe recibir el consultaId
+        if (request.File == null || request.File.Length == 0)
+            return BadRequest("Invalid file.");
+    
+        var id = await _service.SaveImageAsync(request.File, request.ConsultaId);
         return Ok(new { id });
     }
+
 
     [HttpGet("{id}")]
     public async Task<IActionResult> Get(string id)
