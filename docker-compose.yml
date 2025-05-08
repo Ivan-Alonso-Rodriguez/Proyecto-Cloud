@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  ms1:
+    build:
+      context: ./microservicio1
+    container_name: ms1
+    ports:
+      - "8000:8000"
+    environment:
+      - DB_NAME=pacientes_db
+      - DB_USER=user
+      - DB_PASSWORD=password
+      - DB_HOST=13.50.20.100      # ← IP privada de EC2 con PostgreSQL
+      - DB_PORT=5432
+
+  ms2:
+    build:
+      context: ./microservicio2
+    container_name: ms2
+    ports:
+      - "3000:3000"
+    environment:
+      - DB_HOST=13.50.20.100      # ← IP privada de EC2 con MySQL
+      - DB_PORT=3307
+      - DB_USERNAME=root
+      - DB_PASSWORD=root
+      - DB_NAME=clinica_db
+
+  ms3:
+    build:
+      context: ./microservicio3
+    container_name: ms3
+    ports:
+      - "5000:5000"
+    environment:
+      - Mongo__Connection=mongodb://13.50.20.100:27017 # ← IP privada de EC2 con MySQL
+      - Mongo__Database=VetImagesDb
+
+  ms4:
+    build:
+      context: ./microservicio4
+    container_name: ms4
+    ports:
+      - "8004:8004"
+    depends_on:
+      - ms1
+      - ms2
+      - ms3
+    env_file:
+      - ./microservicio4/.env
+
+networks:
+  default:
+    driver: bridge
