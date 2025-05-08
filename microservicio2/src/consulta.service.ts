@@ -1,15 +1,17 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Consulta } from './entities/consulta.entity';
 import { Tratamiento } from './entities/tratamiento.entity';
 import { CreateConsultaDto } from './dto/create-consulta.dto';
+import axios from 'axios';
 
 @Injectable()
 export class ConsultaService {
   constructor(
     @InjectRepository(Consulta)
     private consultaRepo: Repository<Consulta>,
+
     @InjectRepository(Tratamiento)
     private tratamientoRepo: Repository<Tratamiento>,
   ) {}
@@ -23,23 +25,38 @@ export class ConsultaService {
   }
 
   async create(dto: CreateConsultaDto) {
+    // 👇 Validación con microservicio 1 (mascota)
+    try {
+      const response = await axios.get(`http://172.31.21.115:8000/api/mascotas/${dto.mascotaId}/`);
+      if (response.status !== 200) {
+        throw new Error();
+      }
+    } catch (error) {
+      throw new HttpException('Mascota no encontrada en el Microservicio 1', HttpStatus.BAD_REQUEST);
+    }
+
+    // Relación con tratamientos
     const tratamientos = await this.tratamientoRepo.findByIds(dto.tratamientoIds);
+
     const consulta = this.consultaRepo.create({
       fecha: dto.fecha,
       motivo: dto.motivo,
       mascotaId: dto.mascotaId,
       tratamientos,
     });
+
     return this.consultaRepo.save(consulta);
   }
 
   async update(id: number, dto: CreateConsultaDto) {
     const consulta = await this.consultaRepo.findOneBy({ id });
     if (!consulta) return null;
+
     consulta.fecha = dto.fecha;
     consulta.motivo = dto.motivo;
-    mascotaId: dto.mascotaId,
+    consulta.mascotaId = dto.mascotaId;
     consulta.tratamientos = await this.tratamientoRepo.findByIds(dto.tratamientoIds);
+
     return this.consultaRepo.save(consulta);
   }
 
