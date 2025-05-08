@@ -6,7 +6,7 @@ services:
     ports:
       - "3002:3000"
     environment:
-      - DB_HOST=192.168.1.101        # IP privada de la EC2 con MySQL
+      - DB_HOST=172.31.21.115        # IP privada de la EC2 con MySQL
       - DB_USERNAME=root
       - DB_PASSWORD=admin
       - DB_NAME=consultasdb
