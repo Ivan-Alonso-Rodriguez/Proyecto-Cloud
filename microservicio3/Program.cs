@@ -6,16 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSingleton<ImageStorageService>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "VetImagesService", Version = "v1" });
-
-    c.MapType<IFormFile>(() => new OpenApiSchema
-    {
-        Type = "string",
-        Format = "binary"
-    });
-});
+builder.Services.AddSwaggerGen();
 
 
 var app = builder.Build();
