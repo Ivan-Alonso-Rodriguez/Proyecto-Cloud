@@ -12,5 +12,5 @@ services:
       DB_NAME: pacientes_db
       DB_USER: user
       DB_PASSWORD: password
-      DB_HOST: 192.168.1.100  # <- IP privada de tu EC2 que tiene PostgreSQL
+      DB_HOST: 172.31.21.115  # <- IP privada de tu EC2 que tiene PostgreSQL
       DB_PORT: 5432
