@@ -13,6 +13,7 @@ public class ImagesController : ControllerBase
     public ImagesController(ImageStorageService service) => _service = service;
 
     [HttpPost("upload")]
+    [Consumes("multipart/form-data")]
     public async Task<IActionResult> Upload([FromForm] IFormFile file, [FromForm] string consultaId)
     {
         if (file == null || file.Length == 0) return BadRequest("Invalid file.");
