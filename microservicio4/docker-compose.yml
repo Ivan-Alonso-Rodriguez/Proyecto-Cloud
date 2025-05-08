@@ -1,9 +1,10 @@
+version: '3.8'
+
 services:
   orquestador:
     build: .
+    container_name: ms4
     ports:
       - "8004:8004"
-    depends_on:
-      - microservicio1
-      - microservicio2
-      - microservicio3
+    env_file:
+      - .env
