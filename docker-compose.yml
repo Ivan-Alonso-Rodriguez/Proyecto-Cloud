@@ -34,7 +34,7 @@ services:
     ports:
       - "5000:5000"
     environment:
-      - Mongo__Connection=mongodb://172.31.21.115:27017 # ← IP privada de EC2 con MySQL
+      - Mongo__Connection=mongodb://172.31.21.115:27017 # ← IP privada de EC2 con MongoDB
       - Mongo__Database=VetImagesDb
 
   ms4:
