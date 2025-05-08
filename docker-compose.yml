@@ -32,7 +32,7 @@ services:
       context: ./microservicio3
     container_name: ms3
     ports:
-      - "5000:5000"
+      - "5000:80"
     environment:
       - Mongo__Connection=mongodb://172.31.21.115:27017
       - Mongo__Database=VetImagesDb
