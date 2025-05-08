@@ -25,7 +25,7 @@ export class ConsultaService {
   }
 
   async create(dto: CreateConsultaDto) {
-    // 👇 Validación con microservicio 1 (mascota)
+    // Validacion con microservicio 1 (mascota)
     try {
       const response = await axios.get(`http://172.31.21.115:8000/api/mascotas/${dto.mascotaId}/`);
       if (response.status !== 200) {
@@ -35,7 +35,7 @@ export class ConsultaService {
       throw new HttpException('Mascota no encontrada en el Microservicio 1', HttpStatus.BAD_REQUEST);
     }
 
-    // Relación con tratamientos
+    // Relacion con tratamientos
     const tratamientos = await this.tratamientoRepo.findByIds(dto.tratamientoIds);
 
     const consulta = this.consultaRepo.create({
