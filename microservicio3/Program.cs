@@ -14,7 +14,6 @@ builder.Services.AddSwaggerGen(c =>
         Version = "v1"
     });
 
-    // 👇 ESTA LÍNEA ES LA CLAVE PARA EL ERROR DE IFormFile
     c.MapType<IFormFile>(() => new Microsoft.OpenApi.Models.OpenApiSchema
     {
         Type = "string",
