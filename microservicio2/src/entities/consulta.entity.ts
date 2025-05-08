@@ -15,7 +15,7 @@ export class Consulta {
   motivo!: string;
 
   @Column()
-  mascotaId!: number;
+  mascotaId!: number;  // referencia externa a microservicio 1
 
 
   @ManyToMany(() => Tratamiento, { cascade: true })
