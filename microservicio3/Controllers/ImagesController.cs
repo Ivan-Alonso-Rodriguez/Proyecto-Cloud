@@ -2,6 +2,7 @@ using System.IO;
 using Microsoft.AspNetCore.Mvc;
 using VetImagesService.Models;
 using VetImagesService.Services;
+using VetImagesService.Models;
 
 namespace VetImagesService.Controllers;
 
@@ -11,8 +12,6 @@ public class ImagesController : ControllerBase
 {
     private readonly ImageStorageService _service;
     public ImagesController(ImageStorageService service) => _service = service;
-
-    using VetImagesService.Models;
 
     [HttpPost("upload")]
     [Consumes("multipart/form-data")]
