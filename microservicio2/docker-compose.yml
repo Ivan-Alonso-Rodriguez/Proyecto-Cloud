@@ -7,7 +7,7 @@ services:
       - "3002:3000"
     environment:
       - DB_HOST=172.31.21.115        # IP privada de la EC2 con MySQL
-      - DB_USERNAME=user
-      - DB_PASSWORD=password
+      - DB_USERNAME=root
+      - DB_PASSWORD=utec
       - DB_NAME=consultasdb
       - DB_PORT=3307                 # (agregado si tu código lo usa explícitamente)
