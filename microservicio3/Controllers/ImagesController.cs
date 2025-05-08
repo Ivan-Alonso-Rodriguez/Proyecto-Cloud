@@ -12,16 +12,19 @@ public class ImagesController : ControllerBase
     private readonly ImageStorageService _service;
     public ImagesController(ImageStorageService service) => _service = service;
 
+    using VetImagesService.Models;
+
     [HttpPost("upload")]
     [Consumes("multipart/form-data")]
     public async Task<IActionResult> Upload([FromForm] UploadImageRequest request)
     {
         if (request.File == null || request.File.Length == 0)
-            return BadRequest("Invalid file.");
+            return BadRequest("Archivo vacío");
     
         var id = await _service.SaveImageAsync(request.File, request.ConsultaId);
         return Ok(new { id });
     }
+
 
 
     [HttpGet("{id}")]
