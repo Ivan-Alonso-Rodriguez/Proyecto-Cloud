@@ -32,4 +32,8 @@ app.UseSwaggerUI();
 
 app.UseAuthorization();
 app.MapControllers();
+
+// Para mandar OK en /
+app.MapGet("/", () => Results.Text("OK", "text/plain"));
+
 app.Run();
