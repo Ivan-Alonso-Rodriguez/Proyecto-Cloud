@@ -6,6 +6,7 @@ import { ConsultaService } from './consulta.service';
 import { ConsultaController } from './consulta.controller';
 import { TratamientoService } from './tratamiento.service';
 import { TratamientoController } from './tratamiento.controller';
+import { HealthController } from './health.controller';
 
 @Module({
   imports: [
@@ -25,7 +26,7 @@ import { TratamientoController } from './tratamiento.controller';
     }),
     TypeOrmModule.forFeature([Consulta, Tratamiento]),
   ],
-  controllers: [ConsultaController, TratamientoController],
+  controllers: [ConsultaController, TratamientoController, HealthController],
   providers: [ConsultaService, TratamientoService],
 })
 export class AppModule {}
