@@ -19,8 +19,3 @@ RUN chmod +x /wait-for-it.sh
 WORKDIR /code/app
 
 CMD ["sh", "/wait-for-it.sh", "172.31.21.115", "5432", "--", "python", "manage.py", "runserver", "0.0.0.0:8000"]
-
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-
-CMD ["/entrypoint.sh"]
