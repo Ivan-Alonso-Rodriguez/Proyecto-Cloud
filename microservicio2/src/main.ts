@@ -1,7 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { Request, Response } from 'express'; // ✅ importa tipos
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -11,23 +10,8 @@ async function bootstrap() {
     .setDescription('API para consultas médicas veterinarias')
     .setVersion('1.0')
     .build();
-
   const document = SwaggerModule.createDocument(app, config);
-
-  app.use('/swagger-json', (req: Request, res: Response) => res.send(document));
-
-  SwaggerModule.setup('swagger', app, document, {
-    swaggerOptions: {
-      url: '/swagger-json',
-      explorer: true,
-    },
-    customSiteTitle: 'Consultas API - Swagger',
-    customCssUrl: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui.min.css',
-    customJs: [
-      'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui-bundle.min.js',
-      'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui-standalone-preset.min.js',
-    ]
-  });
+  SwaggerModule.setup('swagger', app, document);
 
   await app.listen(3000, '0.0.0.0');
 }
