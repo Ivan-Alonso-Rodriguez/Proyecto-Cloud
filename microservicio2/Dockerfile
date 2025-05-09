@@ -11,7 +11,9 @@ RUN npm install
 
 # Copia el resto de archivos y construye la app
 COPY . .
-RUN npm run build
+RUN npm install && \
+    npm install --save express && \
+    npm install --save-dev @types/express
 
 # Copia el script de espera y dale permisos
 COPY wait-for-it.sh /wait-for-it.sh
