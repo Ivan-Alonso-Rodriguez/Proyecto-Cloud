@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { Request, Response } from 'express'; // ✅ importa tipos
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -12,7 +13,8 @@ async function bootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  app.use('/swagger-json', (req, res) => res.send(document)); // <- JSON endpoint
+
+  app.use('/swagger-json', (req: Request, res: Response) => res.send(document));
 
   SwaggerModule.setup('swagger', app, document, {
     swaggerOptions: {
