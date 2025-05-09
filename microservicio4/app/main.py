@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.responses import PlainTextResponse
 from app.api.routes import router
 
 app = FastAPI(
@@ -9,4 +10,9 @@ app = FastAPI(
     redoc_url=None
 )
 
+# Agrega para health chec
+@app.get("/", response_class=PlainTextResponse)
+async def root():
+    return "OK"
+    
 app.include_router(router)
