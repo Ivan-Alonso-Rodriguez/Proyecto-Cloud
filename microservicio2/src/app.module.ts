@@ -14,7 +14,7 @@ import { HealthController } from './health.controller';
       useFactory: async () => ({
         type: 'mysql',
         host: process.env.DB_HOST || 'localhost',
-        port: process.env.DB_PORT ? parseInt(process.env.DB_PORT) : 3307,
+        port: 3307,
         username: process.env.DB_USERNAME || 'root',
         password: process.env.DB_PASSWORD || 'root',
         database: process.env.DB_NAME || 'clinica_db',
