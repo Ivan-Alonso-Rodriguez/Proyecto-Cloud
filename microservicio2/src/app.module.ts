@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Consulta } from './entities/consulta.entity';
 import { Tratamiento } from './entities/tratamiento.entity';
@@ -10,23 +11,29 @@ import { HealthController } from './health.controller';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+
     TypeOrmModule.forRootAsync({
-      useFactory: async () => ({
-        console.log("Puerto de DB:", process.env.DB_PORT);
+      inject: [ConfigService],
+      useFactory: async (config: ConfigService) => ({
         type: 'mysql',
-        host: process.env.DB_HOST || 'localhost',
-        port: process.env.DB_PORT ? parseInt(process.env.DB_PORT) : 3307,
-        username: process.env.DB_USERNAME || 'root',
-        password: process.env.DB_PASSWORD || 'root',
-        database: process.env.DB_NAME || 'clinica_db',
+        host: config.get('DB_HOST', 'localhost'),
+        port: parseInt(config.get('DB_PORT', '3306')),
+        username: config.get('DB_USERNAME', 'root'),
+        password: config.get('DB_PASSWORD', 'root'),
+        database: config.get('DB_NAME', 'consultasdb'),
         entities: [Consulta, Tratamiento],
         synchronize: true,
         retryAttempts: 10,
         retryDelay: 3000,
       }),
     }),
+
     TypeOrmModule.forFeature([Consulta, Tratamiento]),
   ],
+
   controllers: [ConsultaController, TratamientoController, HealthController],
   providers: [ConsultaService, TratamientoService],
 })
