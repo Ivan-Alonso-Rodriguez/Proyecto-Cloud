@@ -20,11 +20,18 @@ import { HealthController } from './health.controller';
       useFactory: async (config: ConfigService) => {
           const port = config.get<string>('DB_PORT');
           console.log('DB_PORT desde config:', port);
+          console.log('[MS2] Configuración de la BD:', {
+            host: config.get('DB_HOST'),
+            port,
+            username: config.get('DB_USERNAME'),
+            password: config.get('DB_PASSWORD'),
+            database: config.get('DB_NAME'),
+          });
 
         return {
           type: 'mysql',
           host: config.get('DB_HOST', 'localhost'),
-          port: parseInt(port || '3306'),,
+          port: parseInt(port || '3306'),
           username: config.get('DB_USERNAME', 'root'),
           password: config.get('DB_PASSWORD', 'root'),
           database: config.get('DB_NAME', 'consultasdb'),
