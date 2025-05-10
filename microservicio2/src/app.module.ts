@@ -18,27 +18,31 @@ import { HealthController } from './health.controller';
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
       useFactory: async (config: ConfigService) => {
-          const port = config.get<string>('DB_PORT');
-          console.log('DB_PORT desde config:', port);
-          console.log('[MS2] Configuración de la BD:', {
-            host: config.get('DB_HOST'),
-            port,
-            username: config.get('DB_USERNAME'),
-            password: config.get('DB_PASSWORD'),
-            database: config.get('DB_NAME'),
-          });
+        const port = config.get<string>('DB_PORT');
+        const host = config.get('DB_HOST');
+        const username = config.get('DB_USERNAME');
+        const password = config.get('DB_PASSWORD');
+        const database = config.get('DB_NAME');
+
+        console.log('[MS2] Configuración de la BD:', {
+          host,
+          port,
+          username,
+          password,
+          database,
+        });
+
+        if (!port) {
+          throw new Error('[MS2] ❌ La variable DB_PORT no se ha cargado correctamente desde .env');
+        }
 
         return {
           type: 'mysql',
-          host: config.get('DB_HOST', 'localhost'),
-          if (!port) {
-            throw new Error('[MS2] ❌ La variable DB_PORT no se ha cargado correctamente desde .env');
-          }
-          port: 3307,
-          console.log('[MS2] DB_PORT:', port); // << esto debería imprimir 3307
-          username: config.get('DB_USERNAME', 'root'),
-          password: config.get('DB_PASSWORD', 'root'),
-          database: config.get('DB_NAME', 'consultasdb'),
+          host: host || 'localhost',
+          port: parseInt(port),
+          username: username || 'root',
+          password: password || 'root',
+          database: database || 'consultasdb',
           entities: [Consulta, Tratamiento],
           synchronize: true,
           retryAttempts: 10,
