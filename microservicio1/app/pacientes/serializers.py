@@ -11,4 +11,4 @@ class PropietarioSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Propietario
-        fields = '__all__'
+        fields = ['id', 'nombre', 'correo', 'telefono', 'mascotas']
