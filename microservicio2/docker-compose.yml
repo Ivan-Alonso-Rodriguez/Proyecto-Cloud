@@ -4,7 +4,7 @@ services:
   consultas-service:
     build: .
     ports:
-      - "3002:3000"
+      - "3000:3000"
     environment:
       - DB_HOST=172.31.21.115        # IP privada de la EC2 con MySQL
       - DB_USERNAME=root
