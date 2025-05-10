@@ -28,4 +28,9 @@
     "typescript": "^5.0.0",
     "@types/axios": "^0.14.0"
   }
+  "scripts": {
+  "start": "node dist/main",
+  "start:dev": "npx nest start --watch",
+  "build": "npx nest build"
+}
 }
