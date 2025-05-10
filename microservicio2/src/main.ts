@@ -5,9 +5,6 @@ import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
-  //Prefijo api
-  app.setGlobalPrefix('api');
   
   app.enableCors();
 
@@ -24,7 +21,7 @@ async function bootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api/swagger', app, document);
+  SwaggerModule.setup('swagger', app, document);
 
   await app.listen(3000, '0.0.0.0');
 }
