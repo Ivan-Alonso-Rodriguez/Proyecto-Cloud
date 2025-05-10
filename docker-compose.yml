@@ -26,7 +26,9 @@ services:
       - DB_USERNAME=root
       - DB_PASSWORD=utec
       - DB_NAME=consultasdb
-
+    env_file:
+    - ./microservicio2/.env
+      
   ms3:
     build:
       context: ./microservicio3
