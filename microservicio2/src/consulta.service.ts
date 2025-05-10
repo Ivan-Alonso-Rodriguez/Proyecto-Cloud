@@ -40,7 +40,7 @@ export class ConsultaService {
     const tratamientos = await this.tratamientoRepo.findByIds(dto.tratamientoIds);
 
     const consulta = this.consultaRepo.create({
-      fecha: dto.fecha,
+      fecha: new Date(dto.fecha), // 👈 esto corrige el problema
       motivo: dto.motivo,
       mascotaId: dto.mascotaId,
       tratamientos,
