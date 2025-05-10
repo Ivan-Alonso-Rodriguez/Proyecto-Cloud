@@ -18,4 +18,4 @@ COPY wait-for-it.sh /wait-for-it.sh
 RUN chmod +x /wait-for-it.sh
 
 # Usa bash explícitamente para ejecutar el script
-CMD ["bash", "/wait-for-it.sh", "mysql:3306", "--", "npm", "run", "start"]
+CMD ["bash", "/wait-for-it.sh", "mysql:3307", "--", "npm", "run", "start"]
