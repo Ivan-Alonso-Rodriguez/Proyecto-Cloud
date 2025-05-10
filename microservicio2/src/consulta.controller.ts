@@ -18,6 +18,7 @@ export class ConsultaController {
 
   @Post()
   create(@Body() dto: CreateConsultaDto) {
+    console.log('Body recibido:', req.body);
     return this.consultaService.create(dto);
   }
 
