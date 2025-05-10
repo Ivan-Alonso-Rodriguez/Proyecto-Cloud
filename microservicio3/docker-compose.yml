@@ -5,6 +5,6 @@ services:
     build: .
     ports:
       - "3003:80"
-    environment:
-      - MONGO_HOST=172.31.21.115    # IP de la EC2 que contiene MongoDB
-      - MONGO_PORT=27017
+  environment:
+    - Mongo__Connection=mongodb://172.31.21.115:27017
+    - Mongo__Database=VetImagesDb
