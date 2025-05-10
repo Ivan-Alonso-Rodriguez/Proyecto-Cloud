@@ -25,6 +25,7 @@ export class ConsultaService {
   }
 
   async create(dto: CreateConsultaDto) {
+     console.log('DTO recibido:', dto); 
     // Validacion con microservicio 1 (mascota)
     try {
       const response = await axios.get(`http://172.31.21.115:8000/api/mascotas/${dto.mascotaId}/`);
