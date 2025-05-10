@@ -12,6 +12,7 @@ import { HealthController } from './health.controller';
   imports: [
     TypeOrmModule.forRootAsync({
       useFactory: async () => ({
+        console.log("Puerto de DB:", process.env.DB_PORT);
         type: 'mysql',
         host: process.env.DB_HOST || 'localhost',
         port: process.env.DB_PORT ? parseInt(process.env.DB_PORT) : 3307,
