@@ -1,7 +1,9 @@
 import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
 import { TratamientoService } from './tratamiento.service';
 import { CreateTratamientoDto } from './dto/create-tratamiento.dto';
+import { ApiTags, ApiBody } from '@nestjs/swagger';
 
+@ApiTags('tratamientos')
 @Controller('tratamientos')
 export class TratamientoController {
   constructor(private readonly tratamientoService: TratamientoService) {}
@@ -17,8 +19,9 @@ export class TratamientoController {
   }
 
   @Post()
-  create(@Body() dto: CreateTratamientoDto) {
-    return this.tratamientoService.create(dto);
+  @ApiBody({ type: CreateTratamientoDto })
+  create(@Body() createTratamientoDto: CreateTratamientoDto) {
+    return this.tratamientoService.create(createTratamientoDto);
   }
 
   @Delete(':id')
