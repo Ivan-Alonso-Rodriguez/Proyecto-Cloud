@@ -21,19 +21,29 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+// ✅ CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
 
 var app = builder.Build();
 
-// Middlewares
-// Mostrar Swagger SIEMPRE (desarrollo y producción)
+// Middleware
 app.UseSwagger();
 app.UseSwaggerUI();
 
+app.UseCors("AllowAll");
 
 app.UseAuthorization();
 app.MapControllers();
 
-// Para mandar OK en /
+// Ruta raíz para el balanceador de carga
 app.MapGet("/", () => Results.Text("OK", "text/plain"));
 
 app.Run();
