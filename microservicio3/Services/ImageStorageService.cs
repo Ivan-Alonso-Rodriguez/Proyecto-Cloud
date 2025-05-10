@@ -37,6 +37,22 @@ namespace VetImagesService.Services
             return id.ToString();
         }
 
+        public async Task<IEnumerable<object>> GetAllImagesAsync()
+        {
+            var filter = Builders<GridFSFileInfo>.Filter.Empty;
+            using var cursor = await _bucket.FindAsync(filter);
+            var files = await cursor.ToListAsync();
+        
+            return files.Select(f => new
+            {
+                id = f.Id.ToString(),
+                filename = f.Filename,
+                uploadDate = f.UploadDateTime,
+                contentType = f.Metadata?.GetValue("contentType", default(BsonValue))?.AsString ?? "unknown",
+                consultaId = f.Metadata?.GetValue("consultaId", default(BsonValue))?.AsString ?? "N/A"
+            });
+        }
+
         // Obtener imagen por id
         public async Task<(System.IO.Stream Stream, string ContentType)?> GetImageAsync(string id)
         {
