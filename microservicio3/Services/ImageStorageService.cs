@@ -45,7 +45,9 @@ namespace VetImagesService.Services
         
             try
             {
-                var fileInfo = await _bucket.Find(Builders<GridFSFileInfo>.Filter.Eq(x => x.Id, objectId)).FirstOrDefaultAsync();
+                var filter = Builders<GridFSFileInfo>.Filter.Eq("_id", objectId);
+                var fileInfo = await _bucket.Find(filter).FirstOrDefaultAsync();
+
                 if (fileInfo == null) return null;
         
                 var stream = await _bucket.OpenDownloadStreamAsync(objectId);
