@@ -24,6 +24,12 @@ public class ImagesController : ControllerBase
         return Ok(new { id });
     }
 
+    [HttpGet]
+    public async Task<IActionResult> GetAllImages()
+    {
+        var images = await _service.GetAllImagesAsync();
+        return Ok(images);
+    }
 
 
     [HttpGet("{id}")]
