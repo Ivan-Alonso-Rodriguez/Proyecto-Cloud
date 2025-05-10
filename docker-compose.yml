@@ -21,12 +21,12 @@ services:
     ports:
       - "3000:3000"
     environment:
-      DB_HOST: "172.31.21.115"
-      DB_PORT: "3307"
-      DB_USERNAME: "root"
-      DB_PASSWORD: "utec"
-      DB_NAME: "consultasdb"
-
+      - DB_HOST=172.31.21.115
+      - DB_PORT=3307
+      - DB_USERNAME=root
+      - DB_PASSWORD=utec
+      - DB_NAME=consultasdb
+      
   ms3:
     build:
       context: ./microservicio3
