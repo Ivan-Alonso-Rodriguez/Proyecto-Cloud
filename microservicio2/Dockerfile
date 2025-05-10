@@ -5,17 +5,19 @@ RUN apt-get update && apt-get install -y bash
 
 WORKDIR /app
 
-# Copia e instala dependencias
+# Copia el package y el .env
 COPY package*.json ./
+COPY .env ./
+
+# Instala dependencias
 RUN npm install
 
-# Copia el resto de archivos y construye la app
+# Copia el resto del código
 COPY . .
-RUN npm install
 
-# Copia el script de espera y dale permisos
+# Copia el script de espera y da permisos
 COPY wait-for-it.sh /wait-for-it.sh
 RUN chmod +x /wait-for-it.sh
 
-# Usa bash explícitamente para ejecutar el script
+# Usa bash para esperar que MySQL esté listo
 CMD ["bash", "/wait-for-it.sh", "172.31.21.115:3307", "--", "npm", "run", "start"]
