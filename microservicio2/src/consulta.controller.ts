@@ -1,6 +1,7 @@
-import { Controller, Get, Post, Body, Param, Delete, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Put, Req } from '@nestjs/common';
 import { ConsultaService } from './consulta.service';
 import { CreateConsultaDto } from './dto/create-consulta.dto';
+import { Request } from 'express';
 
 @Controller('consultas')
 export class ConsultaController {
@@ -17,10 +18,11 @@ export class ConsultaController {
   }
 
   @Post()
-  create(@Body() dto: CreateConsultaDto) {
-    console.log('Body recibido:', req.body);
+  create(@Body() dto: CreateConsultaDto, @Req() req: Request) {
+    console.log('🟡 Body recibido crudo:', req.body);
     return this.consultaService.create(dto);
   }
+
 
   @Put(':id')
   update(@Param('id') id: string, @Body() dto: CreateConsultaDto) {
