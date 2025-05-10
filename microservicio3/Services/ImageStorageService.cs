@@ -51,18 +51,20 @@ namespace VetImagesService.Services
                 var stream = await _bucket.OpenDownloadStreamAsync(objectId);
         
                 string contentType = "application/octet-stream";
-                if (fileInfo.Metadata != null && fileInfo.Metadata.Contains("contentType"))
+        
+                if (fileInfo.Metadata != null && fileInfo.Metadata.TryGetValue("contentType", out var ct) && ct.IsString)
                 {
-                    contentType = fileInfo.Metadata["contentType"].AsString;
+                    contentType = ct.AsString;
                 }
         
                 return (stream, contentType);
             }
             catch
             {
-                return null; // o lanza una excepción personalizada si prefieres
+                return null; // evita romper la API
             }
         }
+
 
 
         // Obtener todas las imágenes asociadas a un consultaId
