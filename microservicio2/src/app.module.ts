@@ -17,18 +17,23 @@ import { HealthController } from './health.controller';
 
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
-      useFactory: async (config: ConfigService) => ({
-        type: 'mysql',
-        host: config.get('DB_HOST', 'localhost'),
-        port: parseInt(config.get('DB_PORT', '3306')),
-        username: config.get('DB_USERNAME', 'root'),
-        password: config.get('DB_PASSWORD', 'root'),
-        database: config.get('DB_NAME', 'consultasdb'),
-        entities: [Consulta, Tratamiento],
-        synchronize: true,
-        retryAttempts: 10,
-        retryDelay: 3000,
-      }),
+      useFactory: async (config: ConfigService) => {
+        const port = parseInt(config.get('DB_PORT', '3306'));
+        console.log('📌 Puerto MySQL leído desde env:', port);  
+
+        return {
+          type: 'mysql',
+          host: config.get('DB_HOST', 'localhost'),
+          port,
+          username: config.get('DB_USERNAME', 'root'),
+          password: config.get('DB_PASSWORD', 'root'),
+          database: config.get('DB_NAME', 'consultasdb'),
+          entities: [Consulta, Tratamiento],
+          synchronize: true,
+          retryAttempts: 10,
+          retryDelay: 3000,
+        };
+      },
     }),
 
     TypeOrmModule.forFeature([Consulta, Tratamiento]),
