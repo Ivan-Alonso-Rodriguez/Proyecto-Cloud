@@ -18,10 +18,11 @@ export class ConsultaController {
 
   @Post()
   create(@Body() dto: CreateConsultaDto) {
-    console.log('🟢 DTO recibido:', dto);
+    console.log('✅ Tipo de dto:', typeof dto);
+    console.log('🟢 DTO recibido:', JSON.stringify(dto));
     return this.consultaService.create(dto);
   }
-
+  
   @Put(':id')
   update(@Param('id') id: string, @Body() dto: CreateConsultaDto) {
     return this.consultaService.update(+id, dto);
