@@ -53,7 +53,7 @@ export class ConsultaService {
     const consulta = await this.consultaRepo.findOneBy({ id });
     if (!consulta) return null;
 
-    consulta.fecha = dto.fecha;
+    consulta.fecha = new Date(dto.fecha);
     consulta.motivo = dto.motivo;
     consulta.mascotaId = dto.mascotaId;
     consulta.tratamientos = await this.tratamientoRepo.findByIds(dto.tratamientoIds);
