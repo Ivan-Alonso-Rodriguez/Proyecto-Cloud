@@ -42,15 +42,28 @@ namespace VetImagesService.Services
         {
             if (!ObjectId.TryParse(id, out var objectId))
                 return null;
-
-            var fileInfo = await _bucket.Find(Builders<GridFSFileInfo>.Filter.Eq(x => x.Id, objectId)).FirstOrDefaultAsync();
-            if (fileInfo == null) return null;
-
-            var stream = await _bucket.OpenDownloadStreamAsync(objectId);
-            var contentType = fileInfo.Metadata?.GetValue("contentType", BsonNull.Value).AsString ?? "application/octet-stream";
-
-            return (stream, contentType);
+        
+            try
+            {
+                var fileInfo = await _bucket.Find(Builders<GridFSFileInfo>.Filter.Eq(x => x.Id, objectId)).FirstOrDefaultAsync();
+                if (fileInfo == null) return null;
+        
+                var stream = await _bucket.OpenDownloadStreamAsync(objectId);
+        
+                string contentType = "application/octet-stream";
+                if (fileInfo.Metadata != null && fileInfo.Metadata.Contains("contentType"))
+                {
+                    contentType = fileInfo.Metadata["contentType"].AsString;
+                }
+        
+                return (stream, contentType);
+            }
+            catch
+            {
+                return null; // o lanza una excepción personalizada si prefieres
+            }
         }
+
 
         // Obtener todas las imágenes asociadas a un consultaId
         public async Task<IEnumerable<object>> GetImagesByConsultaIdAsync(string consultaId)
