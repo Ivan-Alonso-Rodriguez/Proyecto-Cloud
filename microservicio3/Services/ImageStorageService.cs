@@ -15,7 +15,7 @@ namespace VetImagesService.Services
 
         public ImageStorageService()
         {
-            var client = new MongoClient("mongodb://mongo_c:27017");
+            var client = new MongoClient("mongodb://172.31.21.115:27017");
             _database = client.GetDatabase("VetImagesDb");
             _bucket = new GridFSBucket(_database);
         }
