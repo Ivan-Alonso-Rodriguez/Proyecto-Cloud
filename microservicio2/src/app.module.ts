@@ -35,6 +35,7 @@ import { HealthController } from './health.controller';
             throw new Error('[MS2] ❌ La variable DB_PORT no se ha cargado correctamente desde .env');
           }
           port: parseInt(port || '3306'),
+          console.log('[MS2] DB_PORT:', port); // << esto debería imprimir 3307
           username: config.get('DB_USERNAME', 'root'),
           password: config.get('DB_PASSWORD', 'root'),
           database: config.get('DB_NAME', 'consultasdb'),
