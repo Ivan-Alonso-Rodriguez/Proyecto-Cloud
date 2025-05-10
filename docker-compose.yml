@@ -11,8 +11,10 @@ services:
       - DB_NAME=pacientes_db
       - DB_USER=user
       - DB_PASSWORD=password
-      - DB_HOST=172.31.21.115   # ← IP privada EC2 de PostgreSQL
+      - DB_HOST=172.31.21.115
       - DB_PORT=5432
+    networks:
+      - red_bd
 
   ms2:
     build:
@@ -26,6 +28,8 @@ services:
       - DB_USERNAME=root
       - DB_PASSWORD=utec
       - DB_NAME=consultasdb
+    networks:
+      - red_bd
 
   ms3:
     build:
@@ -36,6 +40,8 @@ services:
     environment:
       - Mongo__Connection=mongodb://172.31.21.115:27017
       - Mongo__Database=VetImagesDb
+    networks:
+      - red_bd
 
   ms4:
     build:
@@ -49,7 +55,9 @@ services:
       - ms3
     env_file:
       - ./microservicio4/.env
+    networks:
+      - red_bd
 
 networks:
-  default:
-    driver: bridge
+  red_bd:
+    external: true
