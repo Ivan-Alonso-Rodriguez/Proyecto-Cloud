@@ -31,6 +31,9 @@ import { HealthController } from './health.controller';
         return {
           type: 'mysql',
           host: config.get('DB_HOST', 'localhost'),
+          if (!port) {
+            throw new Error('[MS2] ❌ La variable DB_PORT no se ha cargado correctamente desde .env');
+          }
           port: parseInt(port || '3306'),
           username: config.get('DB_USERNAME', 'root'),
           password: config.get('DB_PASSWORD', 'root'),
