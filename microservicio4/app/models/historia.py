@@ -1,4 +1,5 @@
 from app.services.ms1 import get_mascota_by_id
+from app.services.ms1 import get_propietario_by_id
 from app.services.ms2 import get_consulta_by_id
 from app.services.ms3 import get_images_by_consulta
 
