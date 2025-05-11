@@ -13,3 +13,12 @@ def get_mascota_by_id(mascota_id):
     except requests.RequestException as e:
         print(f"Error al obtener mascota {mascota_id} desde MS1:", e)
         return None
+
+def get_propietario_by_id(propietario_id):
+    try:
+        response = requests.get(f"{MS1_URL}/propietarios/{propietario_id}")
+        response.raise_for_status()
+        return response.json()
+    except requests.RequestException as e:
+        print(f"Error al obtener propietario {propietario_id} desde MS1:", e)
+        return None
