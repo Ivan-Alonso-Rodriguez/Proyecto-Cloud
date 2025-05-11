@@ -16,7 +16,7 @@ def armar_historia_clinica(consulta_id):
             "imagenes": get_images_by_consulta(consulta_id)
         }
 
-    propietario_id = mascota.get("propietarioId")
+    propietario_id = mascota.get("propietario")
     propietario = get_propietario_by_id(propietario_id) if propietario_id is not None else None
     imagenes = get_images_by_consulta(consulta_id)
 
