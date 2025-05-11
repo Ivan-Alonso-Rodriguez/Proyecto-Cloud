@@ -20,3 +20,10 @@ def obtener_historia_clinica(consulta_id: int):
         return {"detail": historia["error"]}
     return historia
 
+@router.get("/historia/mascota/{mascota_id}", tags=["Historia Clínica"])
+def historia_por_mascota(mascota_id: int):
+    from app.models.historia import armar_historia_por_mascota
+    historia = armar_historia_por_mascota(mascota_id)
+    if "error" in historia:
+        return {"detail": historia["error"]}
+    return historia
