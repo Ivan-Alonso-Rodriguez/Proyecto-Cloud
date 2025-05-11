@@ -14,3 +14,12 @@ def get_consulta_by_id(consulta_id):
     except requests.RequestException as e:
         print(f"Error al obtener consulta {consulta_id} desde MS2:", e)
         return None
+
+def get_all_consultas():
+    try:
+        response = requests.get(f"{MS2_URL}/consultas")
+        response.raise_for_status()
+        return response.json()
+    except requests.RequestException as e:
+        print("Error al obtener todas las consultas desde MS2:", e)
+        return []
