@@ -12,6 +12,9 @@ COPY .env ./
 # Instala dependencias
 RUN npm install
 
+# Compila el proyecto (TypeScript → JavaScript)
+RUN npm run build
+
 # Copia el resto del código
 COPY . .
 
